@@ -1,5 +1,16 @@
 {
   "permissions": {
-    "allow": ["WebFetch(domain:gist.githubusercontent.com)"]
+    "allow": ["WebFetch(domain:gist.githubusercontent.com)"],
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.local)",
+      "Read(**/.dev.vars)",
+      "Read(**/.dev.vars.*)",
+      "Read(~/.polygon-agent/**)",
+      "Edit(~/.polygon-agent/**)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git push --force-with-lease:*)"
+    ]
   }
 }

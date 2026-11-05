@@ -1,5 +1,9 @@
 # Polygon Agent CLI
 
+> This repo is now **White-label Agent Builder** (UniHack, Avalanche). The team's project rules,
+> owners and security invariants are in `.claude/CLAUDE.md` and `.claude/rules/`; design docs are in
+> `docs/team/`. This file describes the inherited wallet CLI the project builds on.
+
 ## Team Standards
 
 Fetch and apply the Polygon Apps Team standards:
