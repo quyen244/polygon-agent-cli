@@ -34,10 +34,10 @@ Giữ xanh, và thêm ca mới khi thêm luật:
 
 ## Thực thi qua CLI
 
-- Chạy CLI như tiến trình con (`polygon-agent send | swap | x402-pay ... --chain avalanche`), đọc JSON `{ ok, ... }`.
+- Chạy CLI như tiến trình con (`avalanche-agent send | swap | x402-pay ... --chain avalanche`), đọc JSON `{ ok, ... }`.
 - `--dry-run` trước, `--broadcast` sau; `x402-pay` luôn có `--max-usd` bằng đúng số tiền đã duyệt.
 - CLI báo lỗi thì ghi `failed` kèm `code` của CLI, không thử lại tự động.
-- Không import code nội bộ của `packages/polygon-agent-cli`; nếu cần thứ CLI chưa có, thêm lệnh vào CLI.
+- Không import code nội bộ của `packages/avalanche-agent-cli`; nếu cần thứ CLI chưa có, thêm lệnh vào CLI.
 
 ## Hợp đồng chung
 

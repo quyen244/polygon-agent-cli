@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 // eslint-disable-next-line import-x/no-relative-packages -- checks the two copies match
-import * as cli from '../../../polygon-agent-cli/src/lib/session/tokens.ts';
+import * as cli from '../../../avalanche-agent-cli/src/lib/session/tokens.ts';
 import { BUY_ALIAS, HOME_CHAINS, SUPPORTED } from './tokens.ts';
 
 describe('covered tokens', () => {

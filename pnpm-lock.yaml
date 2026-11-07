@@ -129,19 +129,7 @@ importers:
         specifier: ^2.8.2
         version: 2.8.2
 
-  packages/oidc-relay:
-    devDependencies:
-      '@cloudflare/workers-types':
-        specifier: ^4.20240712.0
-        version: 4.20260317.1
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-      vitest:
-        specifier: ^3.0.0
-        version: 3.2.7(@types/debug@4.1.13)(@types/node@22.19.13)(lightningcss@1.32.0)(terser@5.46.1)
-
-  packages/polygon-agent-cli:
+  packages/avalanche-agent-cli:
     dependencies:
       '@0xsequence/network':
         specifier: ^2.3.47
@@ -204,6 +192,18 @@ importers:
       esbuild:
         specifier: ^0.28.0
         version: 0.28.0
+      vitest:
+        specifier: ^3.0.0
+        version: 3.2.7(@types/debug@4.1.13)(@types/node@22.19.13)(lightningcss@1.32.0)(terser@5.46.1)
+
+  packages/oidc-relay:
+    devDependencies:
+      '@cloudflare/workers-types':
+        specifier: ^4.20240712.0
+        version: 4.20260317.1
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^3.0.0
         version: 3.2.7(@types/debug@4.1.13)(@types/node@22.19.13)(lightningcss@1.32.0)(terser@5.46.1)
@@ -1334,6 +1334,7 @@ packages:
   '@polymarket/sdk@6.0.1':
     resolution: {integrity: sha512-CJSzGuT/Aavvc8ex2rDFgYm1zhwt8uu0h9NKcpTbVqKcsTjNre82/ZEaUK2Mpc8yAesMk5yHZ80aFZIMYtevpw==}
     engines: {node: '>=8', npm: '>=5'}
+    deprecated: This package is deprecated. Please migrate to the unified Polymarket SDK. Follow https://docs.polymarket.com/migrate/clob-sdk-to-unified-sdk to get started.
     peerDependencies:
       '@ethersproject/abi': ^5.4.1
       '@ethersproject/address': ^5.0.8
@@ -3213,9 +3214,6 @@ packages:
     resolution: {integrity: sha512-j6vWzfrGVfyXxge+O0x5sh6cvxAog0a/4Rdd2K36zCMV5eJ+/+tOAngRO8cODMNWbVRdVlmGZQL2YS3yR8bIUA==}
     engines: {node: '>= 0.4'}
 
-  es-toolkit@1.33.0:
-    resolution: {integrity: sha512-X13Q/ZSc+vsO1q600bvNK4bxgXMkHcf//RxCmYDaRY5DAcT+eoXjY5hoAPGMdRnWQjvyLEcyauG3b6hz76LNqg==}
-
   es-toolkit@1.44.0:
     resolution: {integrity: sha512-6penXeZalaV88MM3cGkFZZfOoLGWshWWfdy0tWw/RlVVyhvMaWSBTOvXNeiW3e5FwdS5ePW0LGEu17zT139ktg==}
 
@@ -4917,18 +4915,6 @@ packages:
 
   ws@8.18.0:
     resolution: {integrity: sha512-8VbfWfHLbbwu3+N6OKsOMpBdT4kXPDDB9cJk2bJ6mh9ucxdlnNvH1e+roYkKmN9Nxw2yjz7VzeO9oOz2zJ04Pw==}
-    engines: {node: '>=10.0.0'}
-    peerDependencies:
-      bufferutil: ^4.0.1
-      utf-8-validate: '>=5.0.2'
-    peerDependenciesMeta:
-      bufferutil:
-        optional: true
-      utf-8-validate:
-        optional: true
-
-  ws@8.20.0:
-    resolution: {integrity: sha512-sAt8BhgNbzCtgGbt2OxmpuryO63ZoDk/sqaB/znQm94T4fCEsy/yV+7CdC1kJhOU9lboAEU7R3kquuycDoibVA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -9044,8 +9030,6 @@ snapshots:
       has-tostringtag: 1.0.2
       hasown: 2.0.2
 
-  es-toolkit@1.33.0: {}
-
   es-toolkit@1.44.0: {}
 
   es-toolkit@1.45.1: {}
@@ -9530,7 +9514,7 @@ snapshots:
       cli-cursor: 4.0.0
       cli-truncate: 4.0.0
       code-excerpt: 4.0.0
-      es-toolkit: 1.33.0
+      es-toolkit: 1.45.1
       indent-string: 5.0.0
       is-in-ci: 1.0.0
       patch-console: 2.0.0
@@ -9544,7 +9528,7 @@ snapshots:
       type-fest: 4.41.0
       widest-line: 5.0.0
       wrap-ansi: 9.0.2
-      ws: 8.20.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
+      ws: 8.21.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       yoga-layout: 3.2.1
     optionalDependencies:
       '@types/react': 18.3.28
@@ -10789,11 +10773,6 @@ snapshots:
       utf-8-validate: 6.0.6
 
   ws@8.18.0(bufferutil@4.1.0)(utf-8-validate@6.0.6):
-    optionalDependencies:
-      bufferutil: 4.1.0
-      utf-8-validate: 6.0.6
-
-  ws@8.20.0(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     optionalDependencies:
       bufferutil: 4.1.0
       utf-8-validate: 6.0.6

@@ -104,7 +104,7 @@ export const BUY_ALIAS: Readonly<Record<string, TokenKind>> = {
   POL: 'pol'
 };
 
-export const HOME_CHAINS: readonly number[] = [137, 8453];
+export const HOME_CHAINS: readonly number[] = [43114]; // Avalanche C-Chain
 
 export function supportedChainIds(): number[] {
   return Object.keys(SUPPORTED)
