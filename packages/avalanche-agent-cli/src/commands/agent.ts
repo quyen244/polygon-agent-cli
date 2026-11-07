@@ -25,6 +25,7 @@ async function handleRegister(argv: {
   'agent-uri'?: string;
   uri?: string;
   metadata?: string;
+  chain?: string;
   broadcast?: boolean;
   dryRun?: boolean;
 }): Promise<void> {
@@ -33,8 +34,10 @@ async function handleRegister(argv: {
   const agentURI = argv['agent-uri'] || argv.uri;
   const metadataStr = argv.metadata;
   const broadcast = resolveBroadcast(argv);
+  const chainSpec = argv.chain || 'avalanche';
 
   try {
+    const network = resolveNetwork(chainSpec);
     const iface = new Interface(IDENTITY_ABI);
     let data: string;
 
@@ -71,14 +74,13 @@ async function handleRegister(argv: {
 
     const { walletAddress, txHash, dryRun } = await runDappClientTx({
       walletName,
-      chainId: 137,
+      chainId: network.chainId,
       transactions: [{ to: IDENTITY_REGISTRY, value: 0n, data }],
       broadcast
     });
 
     if (dryRun) return;
 
-    const network = resolveNetwork('polygon');
     const explorerUrl = getExplorerUrl(network, txHash ?? '');
 
     console.log(
@@ -107,12 +109,17 @@ async function handleRegister(argv: {
 }
 
 // --- identity (agent wallet + optional metadata lookup) ---
-async function handleIdentity(argv: { 'agent-id': string; key?: string }): Promise<void> {
+async function handleIdentity(argv: {
+  'agent-id': string;
+  key?: string;
+  chain?: string;
+}): Promise<void> {
   const agentId = argv['agent-id'];
   const key = argv.key;
+  const chainSpec = argv.chain || 'avalanche';
 
   try {
-    const network = resolveNetwork('polygon');
+    const network = resolveNetwork(chainSpec);
     const provider = new JsonRpcProvider(getRpcUrl(network));
     const contract = new Contract(IDENTITY_REGISTRY, IDENTITY_ABI, provider);
 
@@ -142,13 +149,15 @@ async function handleReputation(argv: {
   'agent-id': string;
   tag1?: string;
   tag2?: string;
+  chain?: string;
 }): Promise<void> {
   const agentId = argv['agent-id'];
   const tag1 = argv.tag1 || '';
   const tag2 = argv.tag2 || '';
+  const chainSpec = argv.chain || 'avalanche';
 
   try {
-    const network = resolveNetwork('polygon');
+    const network = resolveNetwork(chainSpec);
     const provider = new JsonRpcProvider(getRpcUrl(network));
 
     const contract = new Contract(REPUTATION_REGISTRY, REPUTATION_ABI, provider);
@@ -215,6 +224,7 @@ async function handleFeedback(argv: {
   tag2?: string;
   endpoint?: string;
   'feedback-uri'?: string;
+  chain?: string;
   broadcast?: boolean;
   dryRun?: boolean;
 }): Promise<void> {
@@ -226,8 +236,10 @@ async function handleFeedback(argv: {
   const endpoint = argv.endpoint || '';
   const feedbackURI = argv['feedback-uri'] || '';
   const broadcast = resolveBroadcast(argv);
+  const chainSpec = argv.chain || 'avalanche';
 
   try {
+    const network = resolveNetwork(chainSpec);
     const valueFloat = parseFloat(value);
     const decimals = 2;
     const valueInt = BigInt(Math.round(valueFloat * Math.pow(10, decimals)));
@@ -246,14 +258,13 @@ async function handleFeedback(argv: {
 
     const { walletAddress, txHash, dryRun } = await runDappClientTx({
       walletName,
-      chainId: 137,
+      chainId: network.chainId,
       transactions: [{ to: REPUTATION_REGISTRY, value: 0n, data }],
       broadcast
     });
 
     if (dryRun) return;
 
-    const network = resolveNetwork('polygon');
     const explorerUrl = getExplorerUrl(network, txHash ?? '');
 
     console.log(
@@ -287,14 +298,16 @@ async function handleReviews(argv: {
   tag1?: string;
   tag2?: string;
   'include-revoked'?: boolean;
+  chain?: string;
 }): Promise<void> {
   const agentId = argv['agent-id'];
   const tag1 = argv.tag1 || '';
   const tag2 = argv.tag2 || '';
   const includeRevoked = argv['include-revoked'] || false;
+  const chainSpec = argv.chain || 'avalanche';
 
   try {
-    const network = resolveNetwork('polygon');
+    const network = resolveNetwork(chainSpec);
     const provider = new JsonRpcProvider(getRpcUrl(network));
 
     const contract = new Contract(REPUTATION_REGISTRY, REPUTATION_ABI, provider);
@@ -338,7 +351,7 @@ async function handleReviews(argv: {
 
 export const registerCommand: CommandModule = {
   command: 'register',
-  describe: 'Register agent identity on-chain (ERC-8004, Polygon mainnet)',
+  describe: 'Register agent identity on-chain (ERC-8004, Avalanche C-Chain)',
   builder: (y) =>
     withWriteFlags(
       y
@@ -355,6 +368,7 @@ export const registerCommand: CommandModule = {
           describe: 'Key=value pairs (comma-separated)',
           coerce: fileCoerce
         })
+        .option('chain', { type: 'string', default: 'avalanche', describe: 'Chain to register on' })
     ),
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handler: (argv) => handleRegister(argv as any)
@@ -362,7 +376,7 @@ export const registerCommand: CommandModule = {
 
 export const identityCommand: CommandModule = {
   command: 'identity',
-  describe: 'Look up a registered agent: payment wallet and optional metadata',
+  describe: 'Look up a registered agent: payment wallet and optional metadata (ERC-8004)',
   builder: (y) =>
     y
       .option('agent-id', {
@@ -371,14 +385,15 @@ export const identityCommand: CommandModule = {
         describe: 'Agent ID',
         coerce: fileCoerce
       })
-      .option('key', { type: 'string', describe: 'Metadata key to decode', coerce: fileCoerce }),
+      .option('key', { type: 'string', describe: 'Metadata key to decode', coerce: fileCoerce })
+      .option('chain', { type: 'string', default: 'avalanche', describe: 'Chain to query' }),
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handler: (argv) => handleIdentity(argv as any)
 };
 
 export const reputationCommand: CommandModule = {
   command: 'reputation',
-  describe: 'Get reputation score for an agent',
+  describe: 'Get reputation score for an agent (ERC-8004)',
   builder: (y) =>
     y
       .option('agent-id', {
@@ -388,14 +403,15 @@ export const reputationCommand: CommandModule = {
         coerce: fileCoerce
       })
       .option('tag1', { type: 'string', describe: 'Tag 1 filter' })
-      .option('tag2', { type: 'string', describe: 'Tag 2 filter' }),
+      .option('tag2', { type: 'string', describe: 'Tag 2 filter' })
+      .option('chain', { type: 'string', default: 'avalanche', describe: 'Chain to query' }),
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handler: (argv) => handleReputation(argv as any)
 };
 
 export const reviewsCommand: CommandModule = {
   command: 'reviews',
-  describe: 'Read all feedback for an agent',
+  describe: 'Read all feedback for an agent (ERC-8004)',
   builder: (y) =>
     y
       .option('agent-id', {
@@ -410,14 +426,15 @@ export const reviewsCommand: CommandModule = {
         type: 'boolean',
         default: false,
         describe: 'Include revoked feedback'
-      }),
+      })
+      .option('chain', { type: 'string', default: 'avalanche', describe: 'Chain to query' }),
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handler: (argv) => handleReviews(argv as any)
 };
 
 export const feedbackCommand: CommandModule = {
   command: 'feedback',
-  describe: 'Submit feedback for an agent',
+  describe: 'Submit feedback for an agent (ERC-8004)',
   builder: (y) =>
     withWriteFlags(
       y
@@ -438,6 +455,11 @@ export const feedbackCommand: CommandModule = {
         .option('tag2', { type: 'string', describe: 'Tag 2' })
         .option('endpoint', { type: 'string', describe: 'Endpoint' })
         .option('feedback-uri', { type: 'string', describe: 'Feedback URI' })
+        .option('chain', {
+          type: 'string',
+          default: 'avalanche',
+          describe: 'Chain to submit feedback on'
+        })
     ),
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handler: (argv) => handleFeedback(argv as any)
