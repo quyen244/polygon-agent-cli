@@ -49,7 +49,7 @@ export function mapRacError(params: { error: unknown; wallet: string }): unknown
       return new CliError({
         code: 'session_expired',
         message: "This install's access has expired.",
-        command: 'polygon-agent wallet allowance renew',
+        command: 'avalanche-agent wallet allowance renew',
         cause: params.error
       });
     }

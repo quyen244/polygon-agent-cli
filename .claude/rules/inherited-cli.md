@@ -1,5 +1,6 @@
 ---
 paths:
+  - 'packages/avalanche-agent-cli/**'
   - 'packages/polygon-agent-cli/**'
   - 'packages/agentconnect-ui/**'
   - 'packages/oidc-relay/**'

@@ -47,6 +47,7 @@ function serveSkills(): Plugin {
       absOutDir = path.resolve(cfg.root, cfg.build.outDir);
     },
     closeBundle() {
+      if (!fs.existsSync(skillsDir)) return;
       // Mirror skills/* into dist/* (dist already holds the built SPA; the
       // skill tree only adds .md files under new paths, no collisions). A
       // missing or broken skill fails the build: the site serves the install guide.

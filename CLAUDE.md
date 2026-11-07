@@ -14,7 +14,7 @@ Fetch and apply the Polygon Apps Team standards:
 
 This is a pnpm workspace monorepo. The primary package is:
 
-- `packages/polygon-agent-cli/` — CLI tool for on-chain agent operations on Polygon
+- `packages/avalanche-agent-cli/` — CLI tool for on-chain agent operations on Avalanche
 
 Wallets use the OMS (Open Money Stack) V3 embedded-wallet model (`@polygonlabs/oms-wallet`,
 `OMSWallet`): the CLI authenticates via browser login with Google or email (`wallet login`) and
@@ -46,15 +46,15 @@ build and submit it is in `docs/CHATGPT_PLUGIN.md`.
 ## Development
 
 - Dev environment requires Node 24+ (`.nvmrc`). The published CLI supports Node 22+.
-- `tsx packages/polygon-agent-cli/src/index.ts` runs the CLI directly from source (tsx handles `.js`→`.ts` remapping for workspace packages).
+- `tsx packages/avalanche-agent-cli/src/index.ts` runs the CLI directly from source (tsx handles `.js`→`.ts` remapping for workspace packages).
 - `pnpm run build` compiles TypeScript to `dist/` (targeting es2023 for Node 22 compat).
 - The CLI uses yargs with the `CommandModule` builder/handler pattern.
 
 ## Key Directories
 
-- `packages/polygon-agent-cli/src/commands/` — yargs command modules
-- `packages/polygon-agent-cli/src/lib/` — shared utilities (storage, oms-client, oms-tx, oms-storage, tx-dispatch, token-directory, ethauth)
-- `packages/polygon-agent-cli/src/types.d.ts` — ambient declarations for untyped dependencies
+- `packages/avalanche-agent-cli/src/commands/` — yargs command modules
+- `packages/avalanche-agent-cli/src/lib/` — shared utilities (storage, oms-client, oms-tx, oms-storage, tx-dispatch, token-directory, ethauth)
+- `packages/avalanche-agent-cli/src/types.d.ts` — ambient declarations for untyped dependencies
 
 ## Wallet auth (OMS V3)
 

@@ -51,7 +51,7 @@ function keysDir(wallet: string): string {
 // The reconnect command for a wallet. Plain `wallet login`: the CLI picks the
 // sign-in method (browser or chat code) itself.
 export function loginCommand(wallet: string): string {
-  return `polygon-agent wallet login${wallet === 'main' ? '' : ` --name ${wallet}`}`;
+  return `avalanche-agent wallet login${wallet === 'main' ? '' : ` --name ${wallet}`}`;
 }
 
 function slotDir(params: { wallet: string; slot: RacSlot }): string {

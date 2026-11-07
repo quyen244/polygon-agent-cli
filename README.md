@@ -1,54 +1,44 @@
-# Polygon Agent CLI
+# Avalanche Agent CLI (UniHack)
 
-<p align="center">
-  <img src="assets/PolygonAgentsCLI-Architecture.png" alt="Polygon Agent CLI" width="700" />
-</p>
+> **White-label Agent Builder trên Avalanche** — Bộ công cụ vận hành on-chain toàn diện cho AI Agent trên hệ sinh thái **Avalanche**.
 
-Monorepo for the Polygon Agent CLI — everything AI agents need to operate onchain.
+Dự án thi UniHack của nhóm Quyền, Khoa, Lượng. Cung cấp kiến trúc cặp Agent tách biệt (Worker Agent không giữ ví & Treasurer Agent giữ session key trên Avalanche C-Chain) với cơ chế kiểm soát ngân sách, chính sách chi tiêu và phân quyền bảo mật.
 
-## Polygon Agent CLI
+## Cấu trúc Packages
 
-You're probably looking for the CLI. Head to the package for full documentation:
+- **[`packages/avalanche-agent-cli/`](packages/avalanche-agent-cli/)** — CLI cốt lõi vận hành on-chain trên Avalanche (Session keys, Transfers, Trails DEX Swaps, x402 payments).
+- **[`packages/agentconnect-ui/`](packages/agentconnect-ui/)** — Giao diện web đăng nhập ví (Google / Email) phê duyệt allowance.
+- **[`packages/oidc-relay/`](packages/oidc-relay/)** — OIDC relay kết nối trình duyệt với CLI trong quá trình đăng nhập.
+- **[`docs/team/`](docs/team/)** — Toàn bộ tài liệu kiến trúc, hợp đồng chung và phân công công việc của nhóm UniHack.
 
-**[`packages/polygon-agent-cli/`](packages/polygon-agent-cli/)** — `@polygonlabs/agent-cli` on npm
+## Tính năng cốt lõi trên Avalanche
 
-Personal assistants (Muse, OpenClaw, Hermes, Grok Bot, Claude Code, Codex, Cursor): give the assistant https://agents.polygon.technology/skill.md and ask it to set up your wallet. That page is the Open Money Agent skill ([`skills/open-money-agent/`](skills/open-money-agent/)), your own agent for payments on the Open Money Stack (OMS): a short index that installs the CLI, checks the wallet's status, and opens a reference for each use case only when it's needed.
+- **Avalanche C-Chain Native**: Mặc định tương tác với Avalanche C-Chain (Chain ID: `43114`) và token AVAX, USDC, USDT.
+- **Session Key Bounded Allowance**: Chủ ví cấp hạn mức chi tiêu cố định (ví dụ $10 trong 7 ngày), Agent chỉ được chi tiêu trong hạn mức.
+- **Code thuần quyết định**: Mọi quyết định chi tiêu thực thi bằng code xác định, không phụ thuộc LLM.
+- **Tương thích MCP**: Nhúng ví và rule engine vào Model Context Protocol để Antigravity / Claude gọi lệnh an toàn.
 
-Install as a skill:
-
-```bash
-npx skills add https://github.com/0xPolygon/polygon-agent-cli
-```
-
-Or install the plugin, which bundles the same skill:
-
-- Claude Code: `/plugin marketplace add 0xPolygon/polygon-agent-cli`, then `/plugin install open-money-agent@polygon-agent-cli`
-- Codex and Cursor: add this repository (`0xPolygon/polygon-agent-cli`) as a plugin marketplace, then install `open-money-agent`
-
-The manifests live at the repo root (`.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/`, `.agents/plugins/`) and point at [`plugins/open-money-agent/`](plugins/open-money-agent/), whose `skills/` and `assets/` link back to the root folders.
-
-Or install the CLI directly:
+## Bắt đầu nhanh (Quickstart)
 
 ```bash
-npx @polygonlabs/agent-cli --help
-```
-
-## Other Packages
-
-This repository also contains supporting packages:
-
-- **[`packages/agentconnect-ui/`](packages/agentconnect-ui/)** — React app (served at `agentconnect.polygon.technology`) that the CLI opens for browser-based wallet login with Google or email
-- **[`packages/oidc-relay/`](packages/oidc-relay/)** — Cloudflare Worker that pairs the login page with the CLI during browser login
-
-## Development
-
-```bash
+# 1. Cài đặt dependencies
 pnpm install
-pnpm polygon-agent --help
+
+# 2. Chạy CLI
+pnpm avalanche-agent --help
+
+# 3. Kiểm tra số dư mặc định trên Avalanche
+pnpm avalanche-agent balances
+
+# 4. Kiểm tra trạng thái ví và session allowance
+pnpm avalanche-agent wallet status
 ```
 
-Requirements: Node.js 20+, pnpm
+## Yêu cầu môi trường
 
-## License
+- Node.js >= 22 (khuyên dùng Node 24 qua `.nvmrc`)
+- pnpm >= 10
+
+## Bản quyền
 
 MIT

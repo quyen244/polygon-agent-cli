@@ -1,11 +1,7 @@
-# Polygon Agent CLI
+# Avalanche Agent CLI
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/0xPolygon/polygon-agent-cli/main/assets/agents-cli-image.png" alt="Polygon Agent CLI" width="700" />
-</p>
-
-<p align="center">
-  <strong>End-to-end blockchain toolkit for AI agents on Polygon.</strong><br/>
+  <strong>End-to-end blockchain toolkit for AI agents on Avalanche.</strong><br/>
   Give your agent wallets, tokens, swaps, and on-chain identity. One install.
 </p>
 
@@ -18,11 +14,7 @@
 - [Core Components](#core-components)
   - [OMS: Wallet Infrastructure](#oms-wallet-infrastructure)
   - [Swap, Bridge & Deposit](#swap-bridge--deposit)
-  - [Onchain Identity](#onchain-agentic-identity)
-- [Plugins & Skills](#plugins--skills)
 - [CLI Reference](#cli-reference)
-- [Environment Variables](#environment-variables)
-- [Troubleshooting](#troubleshooting)
 - [Development](#development)
 - [License](#license)
 
@@ -30,7 +22,7 @@
 
 ## Overview
 
-Polygon Agent CLI gives AI agents everything they need to operate onchain:
+Avalanche Agent CLI gives AI agents everything they need to operate onchain:
 
 - **Create and manage wallets** browser-login embedded smart wallets, no private keys to manage and no keys exposed to your agent's context.
 - **Send tokens, swap, bridge or any action** pay in any token for any onchain action. Built-in swapping, bridging, deposits, DeFi primitives, and more.
@@ -54,10 +46,10 @@ That page is the Open Money Agent skill. It installs the CLI into the assistant'
 
 ### Install as a skill
 
-Install the Polygon Agent CLI as a skill your agent can use — works with Claude Code, Codex, Openclaw, and any agent harness that supports the skills protocol:
+Install the Avalanche Agent CLI as a skill your agent can use — works with Claude Code, Codex, Openclaw, and any agent harness that supports the skills protocol:
 
 ```bash
-npx skills add https://github.com/0xPolygon/polygon-agent-cli
+npx skills add https://github.com/quyen244/polygon-agent-cli
 ```
 
 Once installed, your agent has access to wallet management, token operations, DEX swaps, and on-chain identity, all through the `agent` CLI. The long-form `polygon-agent` command name remains available as an alias, so both work.
@@ -70,18 +62,18 @@ Once installed, your agent has access to wallet management, token operations, DE
 npm install -g @polygonlabs/agent-cli
 ```
 
-**From source** — for contributors or local development. Use `pnpm polygon-agent` instead of `agent` for all commands.
+**From source** — for contributors or local development. Use `pnpm avalanche-agent` instead of `agent` for all commands.
 
 ```bash
-git clone https://github.com/0xPolygon/polygon-agent-cli.git
+git clone https://github.com/quyen244/polygon-agent-cli.git
 cd polygon-agent-cli
 pnpm install
-pnpm polygon-agent --help
+pnpm avalanche-agent --help
 ```
 
 ### After install: get your agent running
 
-Once installed via skills or npm, run the following. If running from source, run `agent` commands via `pnpm polygon-agent` from the root of the repository (e.g., `pnpm polygon-agent setup --name "MyAgent"`).
+Once installed via skills or npm, run the following. If running from source, run `agent` commands via `pnpm avalanche-agent` from the root of the repository (e.g., `pnpm avalanche-agent setup --name "MyAgent"`).
 
 ```bash
 # 1. Connect your wallet
@@ -110,7 +102,7 @@ agent swap --from USDC --to USDT --amount 5
 agent register --name "MyAgent" --broadcast
 ```
 
-> Write commands preview by default — omit `--broadcast` to dry-run, or run `agent mode auto` once to always broadcast (`--dry-run` still previews any single command). The skill lives in [`skills/open-money-agent/`](https://github.com/0xPolygon/polygon-agent-cli/tree/main/skills/open-money-agent) and ships inside the CLI package: `SKILL.md` is the index, and `references/` holds one file per use case (`connect`, `wallet`, `trade`, `earn`, `watches`, `polymarket`, `paid-services`, `identity`, `platforms`, `developer`, `cli-reference`, `troubleshooting`). `agent skills show open-money-agent` prints the index and `agent skills show <topic>` prints a reference. The old skill names (`polygon-agent-wallet`, `polygon-polymarket`, `polygon-defi`, `polygon-discovery`, `polygon-agent-cli`) still work there.
+> Write commands preview by default — omit `--broadcast` to dry-run, or run `agent mode auto` once to always broadcast (`--dry-run` still previews any single command). The skill lives in [`skills/open-money-agent/`](https://github.com/quyen244/polygon-agent-cli/tree/main/skills/open-money-agent) and ships inside the CLI package: `SKILL.md` is the index, and `references/` holds one file per use case (`connect`, `wallet`, `trade`, `earn`, `watches`, `polymarket`, `paid-services`, `identity`, `platforms`, `developer`, `cli-reference`, `troubleshooting`). `agent skills show open-money-agent` prints the index and `agent skills show <topic>` prints a reference. The old skill names (`polygon-agent-wallet`, `polygon-polymarket`, `polygon-defi`, `polygon-discovery`, `polygon-agent-cli`) still work there.
 
 ### Workspace installs
 
@@ -179,11 +171,11 @@ The CLI ships with agent-friendly documentation designed to be consumed directly
 | Distribution                                | How to install                                              |
 | ------------------------------------------- | ----------------------------------------------------------- |
 | **Personal assistants** — recommended | Give the assistant `https://agents.polygon.technology/skill.md` |
-| **Skills** (Claude Code, Codex, Openclaw, etc.) | `npx skills add https://github.com/0xPolygon/polygon-agent-cli` |
+| **Skills** (Claude Code, Codex, Openclaw, etc.) | `npx skills add https://github.com/quyen244/polygon-agent-cli` |
 
 Once installed, the agent receives the full skill context — including wallet setup, token operations, and ERC-8004 registration, and can execute autonomously.
 
-See the Open Money Agent skill ([`skills/open-money-agent/`](https://github.com/0xPolygon/polygon-agent-cli/tree/main/skills/open-money-agent)) for the agent-facing guide; every command is in its [CLI reference](https://github.com/0xPolygon/polygon-agent-cli/blob/main/skills/open-money-agent/references/cli-reference.md).
+See the Open Money Agent skill ([`skills/open-money-agent/`](https://github.com/quyen244/polygon-agent-cli/tree/main/skills/open-money-agent)) for the agent-facing guide; every command is in its [CLI reference](https://github.com/quyen244/polygon-agent-cli/blob/main/skills/open-money-agent/references/cli-reference.md).
 
 ---
 
@@ -305,7 +297,7 @@ No environment variables are required. The CLI ships a default OMS Builder publi
 pnpm install
 
 # CLI (via root script)
-pnpm polygon-agent --help
+pnpm avalanche-agent --help
 ```
 
 ### Project Structure

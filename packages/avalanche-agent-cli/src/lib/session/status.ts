@@ -179,7 +179,7 @@ export function sessionAlerts(params: {
     alerts.push({
       type: 'expired',
       message: 'The allowance has expired; spending is paused.',
-      command: 'polygon-agent wallet allowance renew',
+      command: 'avalanche-agent wallet allowance renew',
       key: 'expired'
     });
   } else if (live.length > 0) {
@@ -190,7 +190,7 @@ export function sessionAlerts(params: {
       alerts.push({
         type: 'expiring',
         message: `The allowance expires in ${days} day${days === 1 ? '' : 's'} (${new Date(soonest).toISOString().slice(0, 10)}).`,
-        command: 'polygon-agent wallet allowance renew',
+        command: 'avalanche-agent wallet allowance renew',
         // Alerted 7 days and 1 day ahead.
         key: days <= 1 ? 'expiring:1d' : 'expiring:7d'
       });

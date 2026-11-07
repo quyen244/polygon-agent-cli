@@ -544,13 +544,13 @@ export async function checkTransfer(params: {
       throw new CliError({
         code: 'session_expired',
         message: `The allowance on ${chainLabel(params.chainId)} has expired.`,
-        command: 'polygon-agent wallet allowance renew'
+        command: 'avalanche-agent wallet allowance renew'
       });
     }
     throw new CliError({
       code: 'not_covered',
       message: `${symbol} on ${chainLabel(params.chainId)} isn't covered by the allowance.`,
-      command: `polygon-agent wallet allowance set --add ${symbol}@${findNetworkById(params.chainId)?.name ?? params.chainId}`
+      command: `avalanche-agent wallet allowance set --add ${symbol}@${findNetworkById(params.chainId)?.name ?? params.chainId}`
     });
   }
   if (decimals === undefined) {

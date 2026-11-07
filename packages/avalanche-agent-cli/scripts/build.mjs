@@ -37,17 +37,19 @@ await esbuild.build({
 const skillsSrc = path.resolve('..', '..', 'skills');
 const skillsOut = path.join('dist', 'skills');
 fs.rmSync(skillsOut, { recursive: true, force: true });
-for (const entry of fs.readdirSync(skillsSrc, { withFileTypes: true })) {
-  const skill = path.join(skillsSrc, entry.name, 'SKILL.md');
-  if (!entry.isDirectory() || !fs.existsSync(skill)) continue;
-  fs.mkdirSync(path.join(skillsOut, entry.name), { recursive: true });
-  fs.copyFileSync(skill, path.join(skillsOut, entry.name, 'SKILL.md'));
-  const refs = path.join(skillsSrc, entry.name, 'references');
-  if (!fs.existsSync(refs)) continue;
-  fs.mkdirSync(path.join(skillsOut, entry.name, 'references'), { recursive: true });
-  for (const file of fs.readdirSync(refs)) {
-    if (!file.endsWith('.md')) continue;
-    fs.copyFileSync(path.join(refs, file), path.join(skillsOut, entry.name, 'references', file));
+if (fs.existsSync(skillsSrc)) {
+  for (const entry of fs.readdirSync(skillsSrc, { withFileTypes: true })) {
+    const skill = path.join(skillsSrc, entry.name, 'SKILL.md');
+    if (!entry.isDirectory() || !fs.existsSync(skill)) continue;
+    fs.mkdirSync(path.join(skillsOut, entry.name), { recursive: true });
+    fs.copyFileSync(skill, path.join(skillsOut, entry.name, 'SKILL.md'));
+    const refs = path.join(skillsSrc, entry.name, 'references');
+    if (!fs.existsSync(refs)) continue;
+    fs.mkdirSync(path.join(skillsOut, entry.name, 'references'), { recursive: true });
+    for (const file of fs.readdirSync(refs)) {
+      if (!file.endsWith('.md')) continue;
+      fs.copyFileSync(path.join(refs, file), path.join(skillsOut, entry.name, 'references', file));
+    }
   }
 }
 
