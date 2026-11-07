@@ -2,6 +2,8 @@
 # the gap is caught locally while there is still time to amend it into the right commit.
 # Skip on changeset-release/* branches (automated version-bump PRs have no code to describe).
 
+[ ! -d ".changeset" ] && exit 0
+
 branch=$(git rev-parse --abbrev-ref HEAD)
 case "$branch" in
   changeset-release/*) exit 0 ;;

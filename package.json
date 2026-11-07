@@ -1,7 +1,7 @@
 {
-  "name": "polygon-agent-sdk",
+  "name": "avalanche-agent-sdk",
   "version": "0.2.0",
-  "description": "CLI + Agent Skills for building on-chain agents on Polygon",
+  "description": "CLI + Agent Skills for building on-chain agents on Avalanche",
   "type": "module",
   "packageManager": "pnpm@10.30.3",
   "scripts": {
@@ -16,7 +16,9 @@
     "clean": "pnpm -r run clean && rm -rf node_modules",
     "release": "changeset publish",
     "ci:publish": "changeset publish",
-    "polygon-agent": "tsx packages/polygon-agent-cli/src/index.ts"
+    "polygon-agent": "tsx packages/avalanche-agent-cli/src/index.ts",
+    "avalanche-agent": "tsx packages/avalanche-agent-cli/src/index.ts",
+    "agent": "tsx packages/avalanche-agent-cli/src/index.ts"
   },
   "engines": {
     "node": ">=24"
