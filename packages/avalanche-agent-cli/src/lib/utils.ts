@@ -126,6 +126,8 @@ export function getRpcUrl(network: NetworkMetadata): string {
 // polling) when no OMS project access key is available (the OMS path uses
 // publishableKey/projectId, not a nodes.sequence.app access key).
 const PUBLIC_RPC_BY_CHAIN_ID: Record<number, string> = {
+  43114: 'https://api.avax.network/ext/bc/C/rpc',
+  43113: 'https://api.avax-test.network/ext/bc/C/rpc',
   137: 'https://polygon-rpc.com',
   80002: 'https://rpc-amoy.polygon.technology',
   8453: 'https://mainnet.base.org',
@@ -140,9 +142,12 @@ const PUBLIC_RPC_BY_CHAIN_ID: Record<number, string> = {
  * key is configured; otherwise falls back to a public RPC for the chain.
  */
 export function getReadRpcUrl(network: NetworkMetadata): string {
+  if (PUBLIC_RPC_BY_CHAIN_ID[network.chainId]) {
+    return PUBLIC_RPC_BY_CHAIN_ID[network.chainId];
+  }
   const accessKey = process.env.SEQUENCE_PROJECT_ACCESS_KEY;
   if (accessKey) return `https://nodes.sequence.app/${network.name}/${accessKey}`;
-  return PUBLIC_RPC_BY_CHAIN_ID[network.chainId] || `https://polygon-rpc.com`;
+  return 'https://api.avax.network/ext/bc/C/rpc';
 }
 
 /** Explorer URL for transaction */

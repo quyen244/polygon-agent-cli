@@ -11,7 +11,7 @@ import {
   resolveNetwork,
   formatUnits,
   getExplorerUrl,
-  getRpcUrl,
+  getReadRpcUrl,
   fileCoerce
 } from '../lib/utils.ts';
 
@@ -120,7 +120,7 @@ async function handleIdentity(argv: {
 
   try {
     const network = resolveNetwork(chainSpec);
-    const provider = new JsonRpcProvider(getRpcUrl(network));
+    const provider = new JsonRpcProvider(getReadRpcUrl(network));
     const contract = new Contract(IDENTITY_REGISTRY, IDENTITY_ABI, provider);
 
     const walletAddress = await contract.getAgentWallet(agentId);
@@ -158,7 +158,7 @@ async function handleReputation(argv: {
 
   try {
     const network = resolveNetwork(chainSpec);
-    const provider = new JsonRpcProvider(getRpcUrl(network));
+    const provider = new JsonRpcProvider(getReadRpcUrl(network));
 
     const contract = new Contract(REPUTATION_REGISTRY, REPUTATION_ABI, provider);
 
@@ -308,7 +308,7 @@ async function handleReviews(argv: {
 
   try {
     const network = resolveNetwork(chainSpec);
-    const provider = new JsonRpcProvider(getRpcUrl(network));
+    const provider = new JsonRpcProvider(getReadRpcUrl(network));
 
     const contract = new Contract(REPUTATION_REGISTRY, REPUTATION_ABI, provider);
 
